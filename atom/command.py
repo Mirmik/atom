@@ -2,6 +2,10 @@ print("Command processor initializing.")
 
 import atom.notify
 import subprocess
+import signal
+import os
+
+PID = os.getpid()
 
 def notify_fortune():
 	pr = subprocess.Popen(["fortune"],
@@ -11,13 +15,14 @@ def notify_fortune():
 
 commands = {
 	"анекдот" : notify_fortune,
-	"Ты здесь?" : lambda: atom.send_notify("Всегда к вашим услугам."),
+	"ты здесь?" : lambda: atom.send_notify("Всегда к вашим услугам."),
+	"усни" : lambda: os.kill(PID, signal.SIGINT)
 }
 
 def incom(text):
-	print("incom: {}".format(text))
-	if text in commands:
-		commands[text]()
+	print("incom: {}".format(text.lower()))
+	if text.lower() in commands:
+		commands[text.lower()]()
 		return
 
 	atom.send_notify("Нераспознанная входная последовательность")
