@@ -17,5 +17,6 @@ def incom(text):
 	print("incom: {}".format(text))
 	if text in commands:
 		commands[text]()
+		return
 
 	atom.send_notify("Нераспознанная входная последовательность")
