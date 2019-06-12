@@ -70,7 +70,7 @@ class Telegram(atom.notify.notifier):
 
 	def start_polling(self):
 		print("Telegram polling was started.")
-		self.updater.start_polling()
+		self.updater.start_polling(clean=True)
 	
 	def get_updates(self):
 		updates = self.bot.get_updates()
