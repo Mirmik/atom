@@ -6,8 +6,18 @@ import subprocess
 import platform
 import signal
 import os
+import datetime
 
 PID = os.getpid()
+START_STAMP = datetime.datetime.now()  
+
+def sigint_handler(signum, frame):
+	sig_names = {23:"NSIG", 22:"SIGABRT", 21:"SIGBREAK", 8:"SIGFPE", 4:"SIGILL",
+             2:"SIGINT", 11:"SIGSEGV", 15:"SIGTERM", 0:"SIG_DFL", 1:"SIG_IGN"}
+
+	atom.send_notify("Получил сигнал {}. Завершаюсь.".format(sig_names[signum]))
+
+#signal.signal(signal.SIGINT, sigint_handler)
 
 def get_temp():
 	pr = subprocess.Popen(["sensors"],
@@ -29,7 +39,7 @@ def notify_fortune():
 
 def get_status():
 	status = "Ничего интересного не происходит."
-	uptime = "Я заблудился во времени."
+	uptime = str(datetime.datetime.now() - START_STAMP)  #"Я заблудился во времени."
 	cputerm = get_temp() #"Я научусь определять её."
 	atom.send_notify("""{status}.
 Время работы: {uptime}

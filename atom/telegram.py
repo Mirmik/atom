@@ -1,4 +1,5 @@
 import atom.notify
+import atom.command
 import telegram
 import os
 
@@ -69,7 +70,7 @@ class Telegram(atom.notify.notifier):
 			exit(0)
 
 		self.bot = Bot(token=token)
-		self.updater = Updater(bot=self.bot, request_kwargs = REQUEST_KWARGS)
+		self.updater = Updater(bot=self.bot, user_sig_handler=atom.command.sigint_handler, request_kwargs = REQUEST_KWARGS)
 
 		try:
 			answer = self.bot.get_me()
