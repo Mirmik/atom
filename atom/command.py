@@ -20,9 +20,12 @@ commands = {
 }
 
 def incom(text):
-	print("incom: {}".format(text.lower()))
-	if text.lower() in commands:
-		commands[text.lower()]()
-		return
+	try:	
+		print("incom: {}".format(text.lower()))
+		if text.lower() in commands:
+			commands[text.lower()]()
+			return
 
-	atom.send_notify("Нераспознанная входная последовательность")
+		atom.send_notify("Нераспознанная входная последовательность")
+	except Exception as ex:
+		atom.send_notify("exception in incom thread: {}".format(str(ex))
