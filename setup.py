@@ -4,8 +4,6 @@ from wheel.bdist_wheel import bdist_wheel as bdist_wheel_
 from setuptools import setup, Extension, Command
 from distutils.util import get_platform
 
-import zencad
-
 import glob
 import sys
 import os
