@@ -12,12 +12,12 @@ PID = os.getpid()
 START_STAMP = datetime.datetime.now()  
 
 def sigint_handler(signum, frame):
+	print("sigint_handler")
 	sig_names = {23:"NSIG", 22:"SIGABRT", 21:"SIGBREAK", 8:"SIGFPE", 4:"SIGILL",
              2:"SIGINT", 11:"SIGSEGV", 15:"SIGTERM", 0:"SIG_DFL", 1:"SIG_IGN"}
 
 	atom.send_notify("Получил сигнал {}. Завершаюсь.".format(sig_names[signum]))
-
-#signal.signal(signal.SIGINT, sigint_handler)
+	os.kill(PID, signal.SIGKILL)
 
 def get_temp():
 	pr = subprocess.Popen(["sensors"],
