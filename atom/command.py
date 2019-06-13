@@ -28,4 +28,4 @@ def incom(text):
 
 		atom.send_notify("Нераспознанная входная последовательность")
 	except Exception as ex:
-		atom.send_notify("exception in incom thread: {}".format(str(ex))
+		atom.send_notify("exception in incom thread: {}".format(str(ex)))
