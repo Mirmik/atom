@@ -7,6 +7,8 @@ import platform
 import signal
 import os
 import datetime
+import traceback
+from random import randint
 
 PID = os.getpid()
 START_STAMP = datetime.datetime.now()  
@@ -51,11 +53,18 @@ def get_status():
 		hostname=platform.node(),
 		cputerm=cputerm))
 
+kagamine_avas_dir = os.path.join(os.path.dirname(__file__),"img")
+kagamine_avas = [os.path.join(kagamine_avas_dir,l) for l in os.listdir(kagamine_avas_dir)]
+
+def send_kagamine_photo():
+	atom.telegram.telegram.send_photo(kagamine_avas[randint(0, len(kagamine_avas) - 1)])
+
 commands = {
 	"анекдот" : notify_fortune,
 	"ты здесь?" : lambda: atom.send_notify("Всегда к вашим услугам."),
 	"усни" : lambda: os.kill(PID, signal.SIGINT),
-	"как дела?" : lambda: get_status()
+	"как дела?" : lambda: get_status(),
+	"пасхалка" : lambda: send_kagamine_photo()
 }
 
 def incom(text):
@@ -68,3 +77,5 @@ def incom(text):
 		atom.send_notify("Нераспознанная входная последовательность")
 	except Exception as ex:
 		atom.send_notify("exception in incom thread: {}".format(str(ex)))
+		traceback.print_exc()
+

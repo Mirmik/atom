@@ -14,9 +14,9 @@ from telegram.ext import MessageHandler, Filters
 proxy_ip = '127.0.0.1'  # change your proxy's ip
 proxy_port = 9050  # change your proxy's port
 
-socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, proxy_ip, proxy_port)
-socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, proxy_ip, 9080)
-socket.socket = socks.socksocket
+#socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, proxy_ip, proxy_port)
+#socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, proxy_ip, 9080)
+#socket.socket = socks.socksocket
 
 
 print("Telegram module initializing.")
@@ -30,7 +30,7 @@ else:
 	chat = None
 
 REQUEST_KWARGS={
-#	'proxy_url': 'socks5://127.0.0.1:9050',
+	'proxy_url': 'socks5://127.0.0.1:9050',
 }
 
 def filterchat(func):
@@ -93,6 +93,10 @@ class Telegram(atom.notify.notifier):
 				print("Warn: telegram chat isn't defined")
 		except Exception as ex:
 			print("telegram.send_mesage fault with ex: {}".format(ex))
+
+	def send_photo(self, path):
+		print("Отправлено изображение:", path)
+		self.bot.send_photo(chat, open(path, 'rb'))
 
 	def start_polling(self):
 		print("Telegram polling was started.")
