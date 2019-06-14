@@ -2,6 +2,10 @@ import atom
 import threading
 import signal
 
+import io
+import sys
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="UTF-8")
+
 def main():
 	print("Intialization success.")
 	print()
