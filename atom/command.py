@@ -59,12 +59,16 @@ kagamine_avas = [os.path.join(kagamine_avas_dir,l) for l in os.listdir(kagamine_
 def send_kagamine_photo():
 	atom.telegram.telegram.send_photo(kagamine_avas[randint(0, len(kagamine_avas) - 1)])
 
+def are_you_here():
+	atom.telegram.telegram.send_photo(os.path.join(kagamine_avas_dir, "kagamine.jpg"))
+	atom.send_notify("Всегда к вашим услугам.")
+
 commands = {
 	"анекдот" : notify_fortune,
-	"ты здесь?" : lambda: atom.send_notify("Всегда к вашим услугам."),
+	"ты здесь?" : are_you_here,
 	"усни" : lambda: os.kill(PID, signal.SIGINT),
-	"как дела?" : lambda: get_status(),
-	"пасхалка" : lambda: send_kagamine_photo()
+	"как дела?" : get_status,
+	"пасхалка" : send_kagamine_photo
 }
 
 def incom(text):
