@@ -34,7 +34,7 @@ def get_temp():
 	return "undefined"
 
 def notify_fortune():
-	pr = subprocess.Popen(["fortune"],
+	pr = subprocess.Popen(["/usr/games/fortune"],
 						  stdin=subprocess.PIPE,
 						  stdout=subprocess.PIPE)
 	atom.send_notify(pr.stdout.read().decode("utf-8"))
