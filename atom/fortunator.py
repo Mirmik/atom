@@ -35,9 +35,9 @@ class Fortunator(atom.dialog.Dialog):
 	def print_action(self, l0):
 		noun = self.get_first_noun(l0)
 
-		if noun.lemma_ in fortune_noun:
+		if noun.normal_form in fortune_noun:
 			return system_fortune(), 1.0
-		if noun.lemma_ in status_noun:
+		if noun.normal_form in status_noun:
 			return atom.fixcommand.get_status()
 		else:
 			return "", 0.0
