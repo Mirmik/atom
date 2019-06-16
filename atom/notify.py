@@ -9,7 +9,12 @@ class notifier:
 	def notify(self, text):
 		raise NotImplementedError
 
-def send_notify(text):
+def send_notify(obj):
 	for n in notifiers:
-		n.notify(text)
+
+		if isinstance(obj, (list, tuple)):
+			for o in obj:
+				n.notify(o)
+		else:
+			n.notify(obj)
 		

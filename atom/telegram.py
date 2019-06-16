@@ -88,7 +88,10 @@ class Telegram(atom.notify.notifier):
 	def notify(self, text):
 		try:
 			if chat is not None:
-				self.bot.send_message(chat_id=chat, text=text, **REQUEST_KWARGS)
+				if isinstance(text, atom.wrapers.image):
+					self.send_photo(text.path)
+				else:
+					self.bot.send_message(chat_id=chat, text=text, **REQUEST_KWARGS)
 			else:
 				print("Warn: telegram chat isn't defined")
 		except Exception as ex:
