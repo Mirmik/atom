@@ -55,6 +55,7 @@ print("Fixcommand was loaded")
 
 class Fixcommand(atom.dialog.Dialog):
 	def listen(self, text, responce=True):
+		text = text.lower()
 		if text in commands:
 			return commands[text]()
 
