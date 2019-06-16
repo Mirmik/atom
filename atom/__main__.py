@@ -8,6 +8,9 @@ import sys
 
 sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
+def imitate():
+	atom.incom("отправь картинку")
+
 def main():
 	print("Intialization success.")
 	print()
@@ -21,9 +24,10 @@ def main():
 	atom.send_notify("Привет, Мир.")
 	atom.send_notify("Система загружена и готова к работе.")
 
+	#imitate()
+
 	while(1):
 		pass
-	#atom.telegram.telegram.updater.idle()
-	
+
 if __name__ == '__main__':
 	main()

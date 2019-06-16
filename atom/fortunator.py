@@ -6,7 +6,10 @@ from random import randint
 
 import atom.fixcommand
 
-from atom.spacymodel import nlp, get_first_verb, get_first_noun
+import pymorphy2
+morph = pymorphy2.MorphAnalyzer()
+
+#from atom.spacymodel import nlp, get_first_verb, get_first_noun
 
 print("Fortunator was loaded")
 
@@ -29,10 +32,6 @@ def system_fortune():
 	return pr.stdout.read().decode("utf-8")
 
 class Fortunator(atom.dialog.Dialog):
-	def parse(self, text):
-		doc = nlp(text)
-		return doc.sents
-
 	def print_action(self, l0):
 		noun = get_first_noun(l0)
 
@@ -45,33 +44,44 @@ class Fortunator(atom.dialog.Dialog):
 
 
 	def send_action(self, l0):
-		noun = get_first_noun(l0)
+		noun = self.get_first_noun(l0)
 
-		if noun.lemma_ in pict_noun:
+		if noun.normal_form in pict_noun:
 			return get_random_picture(), 1.0
 		else:
 			return "", 0.0
 
+	def get_first_verb(self, sents):
+		for t in sents:
+			if t[0].tag.POS == "VERB":
+				return t[0]
+		return None
+
+	def get_first_noun(self, sents):
+		for t in sents:
+			if t[0].tag.POS == "NOUN":
+				return t[0]
+		return None
+
+	def parse(self, text):
+		parr = []
+
+		for t in text.split():
+			parr.append(morph.parse(t))
+
+		return parr
+
 	def interpret(self, sents, **kwargs):
-		sarr = []
-		for s in sents:
-			sarr.append(s)
-
-		l0 = sarr[0]
-
-		for l in l0:
-			atom.spacymodel.print_token(l)
-
-		verb = get_first_verb(l0)
+		verb = self.get_first_verb(sents)
 
 		if verb is None:
 			return "", 0.0
 
-		if verb.lemma_ in verbs_print:
-			return self.print_action(l0)
+		if verb.normal_form in verbs_print:
+			return self.print_action(sents)
 
-		if verb.lemma_ in verbs_send:
-			return self.send_action(l0)
+		if verb.normal_form in verbs_send:
+			return self.send_action(sents)
 
 		return "", 0.0
 

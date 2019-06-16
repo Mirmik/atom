@@ -18,7 +18,7 @@ setup(
     author_email="netricks@protonmail.com",
     url="https://github.com/mirmik/atom",
     classifiers=[],
-    package_data={"atom": ["img/*", "ru2/*", "ru2/ner/*", "ru2/parser/*", "ru2/tagger/*", "ru2/vocab/*"]},
+    package_data={"atom": ["img/*"]},
     include_package_data=True,
     install_requires=[],
     entry_points={"console_scripts": ["atom=atom.__main__:main"]},
