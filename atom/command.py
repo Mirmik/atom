@@ -1,6 +1,6 @@
 print("Command processor initializing.")
 
-import spacy
+#import spacy
 #import ru2
 
 import re
