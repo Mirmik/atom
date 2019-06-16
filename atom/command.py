@@ -22,7 +22,6 @@ def sigint_handler(signum, frame):
 	atom.send_notify("Получил сигнал {}. Завершаюсь.".format(sig_names[signum]))
 	os.kill(PID, signal.SIGKILL)
 
-
 def incom(text):
 	try:	
 		print("incom: {}".format(text.lower()))
