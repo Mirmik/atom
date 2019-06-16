@@ -33,7 +33,7 @@ def system_fortune():
 
 class Fortunator(atom.dialog.Dialog):
 	def print_action(self, l0):
-		noun = get_first_noun(l0)
+		noun = self.get_first_noun(l0)
 
 		if noun.lemma_ in fortune_noun:
 			return system_fortune(), 1.0
