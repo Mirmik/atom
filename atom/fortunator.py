@@ -23,7 +23,7 @@ kagamine_avas_dir = os.path.join(os.path.dirname(__file__),"img")
 kagamine_avas = [os.path.join(kagamine_avas_dir,l) for l in os.listdir(kagamine_avas_dir)]
 
 def get_random_picture():
-	return atom.wrapers.image(kagamine_avas[randint(0, len(kagamine_avas) - 1)]), 1.0
+	return atom.wrapers.image(kagamine_avas[randint(0, len(kagamine_avas) - 1)])
 
 def system_fortune():
 	pr = subprocess.Popen(["fortune"],
