@@ -30,8 +30,8 @@ else:
 	chat = None
 
 REQUEST_KWARGS={
-#	'proxy_url': 'socks5://127.0.0.1:9050',
-}
+#x	'proxy_url': 'socks5://127.0.0.1:9050',
+à}
 
 def filterchat(func):
 	def decfunc(bot, update):
