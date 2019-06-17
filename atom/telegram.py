@@ -1,5 +1,7 @@
 import atom.notify
 import atom.command
+import atom.utils
+
 import telegram
 import os
 
@@ -42,6 +44,14 @@ def filterchat(func):
 
 	return decfunc
 
+#@filterchat
+#def morph_analize(bot, update, args):
+#	try:
+#		print("morph", args)
+#		bot.send_message(chat_id=update.message.chat_id, text=atom.utils.morph_analize(args[0]))
+#	except Exception as ex:
+#		print(ex)
+
 @filterchat
 def start(bot, update):	
 	try:
@@ -82,6 +92,8 @@ class Telegram(atom.notify.notifier):
 		start_handler = CommandHandler('start', start)
 		self.updater.dispatcher.add_handler(start_handler)
 
+#		self.updater.dispatcher.add_handler("morph", morph_analize, pass_args=True)
+  		
 		input_message_handler = MessageHandler(Filters.text, input_message)
 		self.updater.dispatcher.add_handler(input_message_handler)
 

@@ -14,7 +14,7 @@ morph = pymorphy2.MorphAnalyzer()
 print("Fortunator was loaded")
 
 verbs_print = set(["скажи", "сказать", "расскажи", "рассказать", "напиши", "писать"])
-verbs_send = set(["отправить"])
+verbs_send = set(["отправить", "прислать"])
 status_noun = set(["статус", "состояние"])
 fortune_noun = set(["фортунка", "анекдот"])
 pict_noun = set(["фотография", "картинка", "фотка", "изображение"])
@@ -77,12 +77,22 @@ class Fortunator(atom.dialog.Dialog):
 		if verb is None:
 			return "", 0.0
 
+		ret = None
+
+		if atom.modes.debug_mode:
+			atom.send_notify("debug_morph: " + str(sents))
+			atom.send_notify("first_verb: " + str(self.get_first_noun(sents)))
+			atom.send_notify("first_noun: " + str(self.get_first_noun(sents)))
+
 		if verb.normal_form in verbs_print:
-			return self.print_action(sents)
+			ret = self.print_action(sents)
 
 		if verb.normal_form in verbs_send:
-			return self.send_action(sents)
+			ret = self.send_action(sents)
 
-		return "", 0.0
+		if ret is not None and ret[1] > 0.00001:
+			return ret
+		else:
+			return "", 0.0
 
 atom.conver.conversation.add_dialog(Fortunator())
