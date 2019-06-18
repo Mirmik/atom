@@ -1,0 +1,18 @@
+Intialization success.
+
+notify: *
+notify: *
+notify: *
+notify: utf-8 test: 黒い猫の星は撤回しない
+notify: Привет, Мир.
+notify: Система загружена и готова к работе.
+sigint_handler
+notify: Получил сигнал SIGINT. Завершаюсь.
+sigint_handler
+notify: Получил сигнал SIGINT. Завершаюсь.
+sigint_handler
+notify: Получил сигнал SIGINT. Завершаюсь.
+sigint_handler
+notify: Получил сигнал SIGINT. Завершаюсь.
+sigint_handler
+notify: Получил сигнал SIGINT. Завершаюсь.
