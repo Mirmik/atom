@@ -26,7 +26,7 @@ def get_random_picture():
 	return atom.wrapers.image(kagamine_avas[randint(0, len(kagamine_avas) - 1)])
 
 def system_fortune():
-	pr = subprocess.Popen(["fortune"],
+	pr = subprocess.Popen(["/usr/games/fortune"],
 						  stdin=subprocess.PIPE,
 						  stdout=subprocess.PIPE)
 	return pr.stdout.read().decode("utf-8")
