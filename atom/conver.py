@@ -21,6 +21,7 @@ class Conversation(atom.dialog.Dialog):
 
 		responses = []
 		for d in self.dialogs:
+			#print(d.__class__)
 			r = d.listen(text, response) 
 			if r is None or len(r) != 2:
 				print("Warn: dialog {} return is not valid".format(d.__class__))

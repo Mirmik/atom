@@ -14,7 +14,7 @@ morph = pymorphy2.MorphAnalyzer()
 
 print("Fortunator was loaded")
 
-verbs_active = set(["включи", "запусти"])
+verbs_active = set(["включить", "запусти"])
 verbs_print = set(["скажи", "сказать", "расскажи", "рассказать", "напиши", "писать"])
 verbs_send = set(["отправить", "прислать"])
 
@@ -60,7 +60,7 @@ class Fortunator(atom.dialog.Dialog):
 
 		if noun.normal_form in noun_base:
 			atom.utils.active_base()
-			return "Подан сигнал на активация главной машины", 1.0
+			return "Подан сигнал на активацию главной машины", 1.0
 		else:
 			return "", 0.0
 
