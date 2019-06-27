@@ -8,6 +8,7 @@ import os
 import platform
 import datetime
 
+PID = os.getpid()
 START_STAMP = datetime.datetime.now()  
 
 def get_temp():
