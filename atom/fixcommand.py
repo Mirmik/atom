@@ -2,6 +2,7 @@ import atom.dialog
 import atom.conver
 import atom.wrapers
 
+import signal
 from random import randint
 import subprocess
 import os

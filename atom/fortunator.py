@@ -5,6 +5,7 @@ import subprocess
 from random import randint
 
 import atom.fixcommand
+import atom.utils
 
 import pymorphy2
 morph = pymorphy2.MorphAnalyzer()
@@ -13,8 +14,11 @@ morph = pymorphy2.MorphAnalyzer()
 
 print("Fortunator was loaded")
 
+verbs_active = set(["включи", "запусти"])
 verbs_print = set(["скажи", "сказать", "расскажи", "рассказать", "напиши", "писать"])
 verbs_send = set(["отправить", "прислать"])
+
+noun_base = set(["база", "машина"])
 status_noun = set(["статус", "состояние"])
 fortune_noun = set(["фортунка", "анекдот"])
 pict_noun = set(["фотография", "картинка", "фотка", "изображение"])
@@ -48,6 +52,15 @@ class Fortunator(atom.dialog.Dialog):
 
 		if noun.normal_form in pict_noun:
 			return get_random_picture(), 1.0
+		else:
+			return "", 0.0
+
+	def active_action(self, l0):
+		noun = self.get_first_noun(l0)
+
+		if noun.normal_form in noun_base:
+			atom.utils.active_base()
+			return "Подан сигнал на активация главной машины", 1.0
 		else:
 			return "", 0.0
 
@@ -89,6 +102,9 @@ class Fortunator(atom.dialog.Dialog):
 
 		if verb.normal_form in verbs_send:
 			ret = self.send_action(sents)
+
+		if verb.normal_form in verbs_active:
+			ret = self.active_action(sents)
 
 		if ret is not None and ret[1] > 0.00001:
 			return ret
