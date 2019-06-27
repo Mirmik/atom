@@ -9,3 +9,5 @@ import atom.command
 
 from atom.notify import send_notify
 from atom.command import incom
+
+import atom.monitor
