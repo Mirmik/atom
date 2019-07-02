@@ -2,14 +2,40 @@ import atom
 import threading
 import signal
 
+import datetime
+import time
 import io
 import sys
 #sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="UTF-8")
+
+import threading
 
 sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
 def imitate():
 	atom.incom("отправь картинку")
+
+def self_loop():
+	today_greatings = False
+
+	while 1:
+		try:
+			now = datetime.datetime.now()
+			hour = now.hour
+			minu = now.minute
+
+			if hour == 8 and 20 < minu < 40:
+				if today_greatings is False:
+					today_greatings = True
+					send_notify("Доброе утро")
+
+			if hour == 0:
+				today_greatings = False
+
+			time.sleep(1)
+
+		except Exception as ex:
+			print(ex)
 
 def main():
 	print("Intialization success.")
@@ -25,6 +51,9 @@ def main():
 	atom.send_notify("Система загружена и готова к работе.")
 
 	#imitate()
+
+	sloop = threading.Thread(target = self_loop, args=())
+	sloop.start()
 
 	while(1):
 		pass

@@ -46,9 +46,13 @@ def send_kagamine_photo():
 def are_you_here():
 	return (atom.wrapers.image(os.path.join(kagamine_avas_dir, "kagamine.jpg")), "Всегда к вашим услугам."), 1.0
 
+def sleep_please():
+	os.kill(PID, signal.SIGINT)
+	return "Не забудь вернуть меня.", 1.0
+
 commands = {
 	"ты здесь?" : are_you_here,
-	"усни" : lambda: os.kill(PID, signal.SIGINT),
+	"усни" : sleep_please,
 	"как дела?" : get_status,
 	"пасхалка" : send_kagamine_photo
 }
