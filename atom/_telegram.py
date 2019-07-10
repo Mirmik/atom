@@ -1,5 +1,7 @@
 import atom.notify
 import atom.command
+import atom.utils
+
 import telegram
 import os
 
@@ -30,8 +32,8 @@ else:
 	chat = None
 
 REQUEST_KWARGS={
-#x	'proxy_url': 'socks5://127.0.0.1:9050',
-à}
+#	'proxy_url': 'socks5://127.0.0.1:9050',
+}
 
 def filterchat(func):
 	def decfunc(bot, update):
@@ -41,6 +43,14 @@ def filterchat(func):
 		return func(bot, update)
 
 	return decfunc
+
+#@filterchat
+#def morph_analize(bot, update, args):
+#	try:
+#		print("morph", args)
+#		bot.send_message(chat_id=update.message.chat_id, text=atom.utils.morph_analize(args[0]))
+#	except Exception as ex:
+#		print(ex)
 
 @filterchat
 def start(bot, update):	
@@ -82,6 +92,8 @@ class Telegram(atom.notify.notifier):
 		start_handler = CommandHandler('start', start)
 		self.updater.dispatcher.add_handler(start_handler)
 
+#		self.updater.dispatcher.add_handler("morph", morph_analize, pass_args=True)
+  		
 		input_message_handler = MessageHandler(Filters.text, input_message)
 		self.updater.dispatcher.add_handler(input_message_handler)
 
@@ -103,7 +115,7 @@ class Telegram(atom.notify.notifier):
 
 	def start_polling(self):
 		print("Telegram polling was started.")
-		self.updater.start_polling(clean=True)
+		self.updater.start_polling(poll_interval=0.5, clean=True)
 	
 	def get_updates(self):
 		updates = self.bot.get_updates()

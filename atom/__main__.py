@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import atom
 import threading
 import signal
@@ -56,7 +58,7 @@ def main():
 	sloop.start()
 
 	while(1):
-		pass
+		time.sleep(0.5)
 
 if __name__ == '__main__':
 	main()

@@ -1,7 +1,7 @@
 import atom.modes
 import atom.notify
 import atom.console
-import atom.telegram
+import atom._telegram
 
 from atom.conver import conversation
 
