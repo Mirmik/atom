@@ -29,7 +29,7 @@ def self_loop():
 			if hour == 8 and 20 < minu < 40:
 				if today_greatings is False:
 					today_greatings = True
-					send_notify("Доброе утро")
+					atom.send_notify("Доброе утро")
 
 			if hour == 0:
 				today_greatings = False
