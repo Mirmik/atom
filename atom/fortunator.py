@@ -15,7 +15,7 @@ morph = pymorphy2.MorphAnalyzer()
 print("Fortunator was loaded")
 
 verbs_active = set(["включить", "запусти"])
-verbs_scan = set(["просканировать"])
+verbs_scan = set(["сканировать", "просканировать"])
 verbs_print = set(["скажи", "сказать", "расскажи", "рассказать", "напиши", "писать"])
 verbs_send = set(["отправить", "прислать"])
 
