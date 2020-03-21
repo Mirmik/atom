@@ -1,5 +1,7 @@
 import pymorphy2
 import os
+import threading
+
 from atom.notify import send_notify
 
 morph = pymorphy2.MorphAnalyzer()
@@ -16,7 +18,11 @@ def morph_analize(arg):
 def active_base():
 	os.system("/home/mirmik/wakonpc.sh")
 
-def scan_network():
-	print("scan_network")
 
-	send_notify(system("nmap -sP 192.168.1.1-255"))
+def scan_network_impl():
+	resp = system("nmap -sP 192.168.1.1/24 -oG -")
+	send_notify(resp)
+
+def scan_network():
+	thr = threading.Thread(target=scan_network_impl)
+	thr.start()
