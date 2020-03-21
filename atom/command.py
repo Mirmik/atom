@@ -12,6 +12,9 @@ from random import randint
 
 import atom.conver
 
+import pymorphy2
+morph = pymorphy2.MorphAnalyzer()
+
 PID = os.getpid()
 
 def sigint_handler(signum, frame):
@@ -32,6 +35,11 @@ def incom(text):
 			atom.send_notify(result)
 		else:		
 			atom.send_notify("Нераспознанная входная последовательность")
+			
+			for t in text.split():
+				atom.send_notify(morph.parse(t))
+
+			
 	
 	except Exception as ex:
 		atom.send_notify("exception in incom thread: {}".format(str(ex)))
