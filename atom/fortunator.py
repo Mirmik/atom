@@ -95,7 +95,7 @@ class Fortunator(atom.dialog.Dialog):
 
 	def get_first_noun(self, sents):
 		for t in sents:
-			if t[0].tag.POS == "NOUN":
+			if t[0].tag.POS in ("NOUN", "NPRO"):
 				return t[0]
 		return None
 
