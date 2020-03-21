@@ -16,7 +16,7 @@ def serve(milliseconds):
 		ips = atom.utils.scan_network_doit()
 
 		for p in ips:
-			if p not in lastscan_ips and not in outed:
+			if p not in lastscan_ips and p[0] not in outed:
 				atom.send_notify(f"Сканер зарегистрировал новую пару {p}")
 				if p[0] in outed:
 					del outed[p[0]]
