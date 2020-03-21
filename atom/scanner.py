@@ -23,6 +23,7 @@ def serve(milliseconds):
 
 		for p in lastscan_ips:
 			if p not in ips:
+				print("Добавляю в outed", (milliseconds, p))
 				outed[p[0]] = (milliseconds, p)
 				
 		for k, v in outed.items():
