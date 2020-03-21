@@ -31,3 +31,4 @@ def scan_network_impl():
 def scan_network():
 	thr = threading.Thread(target=scan_network_impl)
 	thr.start()
+	return "Начинаю сканирование сети."

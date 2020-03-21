@@ -70,8 +70,8 @@ class Fortunator(atom.dialog.Dialog):
 		noun = self.get_first_noun(l0)
 
 		if noun.normal_form in noun_net:
-			atom.utils.scan_network()
-			return "Сканирую сеть", 1.0
+			responce = atom.utils.scan_network()
+			return responce, 1.0
 		else:
 			return "", 0.0
 
