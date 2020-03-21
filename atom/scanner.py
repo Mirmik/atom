@@ -8,7 +8,7 @@ def serve(milliseconds):
 	global lastscan_time
 	global lastscan_ips
 
-	if milliseconds - lastscan_time > 30000:
+	if milliseconds - lastscan_time > 20000:
 		lastscan_time = milliseconds
 
 		ips = atom.utils.scan_network_doit()
