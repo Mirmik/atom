@@ -20,14 +20,19 @@ def active_base():
 	os.system("/home/mirmik/wakonpc.sh")
 
 
-def scan_network_impl():
+def scan_network_doit():
 	resp = system("nmap -sP 192.168.1.1/24 -oG - | grep Host")
 	lines = resp.split("\n")
-	ips = [(l.split()[1], l.split()[2]) for l in lines if l!=""]
-	
+	return [(l.split()[1], l.split()[2]) for l in lines if l!=""]
+
+
+def scan_network_impl():
+	ips = scan_network_doit()
+
 	send_notify("В сети существуют адреса:")
 	for i in ips:
 		send_notify("{} {}".format(*i))
+
 
 def scan_network():
 	thr = threading.Thread(target=scan_network_impl)

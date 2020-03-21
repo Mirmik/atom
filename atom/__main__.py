@@ -12,6 +12,8 @@ import sys
 
 import threading
 
+import atom.scanner
+
 sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
 
 def imitate():
@@ -22,9 +24,13 @@ def self_loop():
 
 	while 1:
 		try:
+			milliseconds = int(round(time.time() * 1000))
+
 			now = datetime.datetime.now()
 			hour = now.hour
 			minu = now.minute
+
+			atom.scanner.serve(milliseconds)
 
 			if hour == 8 and 20 < minu < 40:
 				if today_greatings is False:
