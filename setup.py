@@ -21,5 +21,5 @@ setup(
     package_data={"atom": ["img/*"]},
     include_package_data=True,
     install_requires=[],
-    entry_points={"console_scripts": ["atom=atom.__main__:main"]},
+    entry_points={"console_scripts": ["atom=atom.__main__:main", "atom_starter=atom.starter:main"]},
 )
