@@ -132,7 +132,7 @@ class Fortunator(atom.dialog.Dialog):
 		if verb.normal_form in verbs_scan:
 			ret = self.scan_action(sents)
 
-		if verb.normal_form in reboot_action:
+		if verb.normal_form in verbs_reboot:
 			ret = self.reboot_action(sents)
 
 		if ret is not None and ret[1] > 0.00001:
