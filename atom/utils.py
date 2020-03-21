@@ -8,9 +8,9 @@ import subprocess
 morph = pymorphy2.MorphAnalyzer()
 
 def system(cmd):
-	pr = subprocess.Popen(cmd.split(),
+	pr = subprocess.Popen(cmd,
 						  stdin=subprocess.PIPE,
-						  stdout=subprocess.PIPE)
+						  stdout=subprocess.PIPE, shell=True)
 	return pr.stdout.read().decode("utf-8")
 
 def morph_analize(arg):
