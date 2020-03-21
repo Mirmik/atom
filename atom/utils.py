@@ -23,7 +23,7 @@ def active_base():
 def scan_network_impl():
 	resp = system("nmap -sP 192.168.1.1/24 -oG - | grep Host")
 	lines = resp.split("\n")
-	ips = [l.split()[1] for l in lines if l!=""]
+	ips = [(l.split()[1], l.split()[2]) for l in lines if l!=""]
 	
 	send_notify("В сети существуют адреса:")
 	send_notify(ips)
