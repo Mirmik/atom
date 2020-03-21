@@ -8,3 +8,6 @@ def morph_analize(arg):
 
 def active_base():
 	os.system("/home/mirmik/wakonpc.sh")
+
+def scan_network():
+	print("scan_network")

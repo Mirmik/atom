@@ -15,10 +15,12 @@ morph = pymorphy2.MorphAnalyzer()
 print("Fortunator was loaded")
 
 verbs_active = set(["включить", "запусти"])
+verbs_scan = set(["просканировать"])
 verbs_print = set(["скажи", "сказать", "расскажи", "рассказать", "напиши", "писать"])
 verbs_send = set(["отправить", "прислать"])
 
 noun_base = set(["база", "машина"])
+noun_net = set(["сеть"])
 status_noun = set(["статус", "состояние"])
 fortune_noun = set(["фортунка", "анекдот"])
 pict_noun = set(["фотография", "картинка", "фотка", "изображение"])
@@ -64,6 +66,15 @@ class Fortunator(atom.dialog.Dialog):
 		else:
 			return "", 0.0
 
+	def scan_action(self, l0):
+		noun = self.get_first_noun(l0)
+
+		if noun.normal_form in noun_net:
+			atom.utils.scan_network()
+			return "Сканирую сеть", 1.0
+		else:
+			return "", 0.0
+
 	def get_first_verb(self, sents):
 		for t in sents:
 			if t[0].tag.POS == "VERB":
@@ -105,6 +116,9 @@ class Fortunator(atom.dialog.Dialog):
 
 		if verb.normal_form in verbs_active:
 			ret = self.active_action(sents)
+
+		if verb.normal_form in verbs_scan:
+			ret = self.scan_action(sents)
 
 		if ret is not None and ret[1] > 0.00001:
 			return ret
