@@ -77,7 +77,7 @@ class Fortunator(atom.dialog.Dialog):
 
 	def get_first_verb(self, sents):
 		for t in sents:
-			if t[0].tag.POS == "VERB":
+			if t[0].tag.POS == "VERB" or t[0].tag.POS == "INFN":
 				return t[0]
 		return None
 
