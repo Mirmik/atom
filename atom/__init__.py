@@ -16,3 +16,7 @@ from atom.notify import send_notify
 from atom.command import incom
 
 import atom.monitor
+
+import setproctitle
+
+setproctitle.setproctitle("atom")
