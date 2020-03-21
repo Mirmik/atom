@@ -19,6 +19,12 @@ def morph_analize(arg):
 def active_base():
 	os.system("/home/mirmik/wakonpc.sh")
 
+def reboot_base():
+	return "Процедура перезагрузки базы еще не поддерживается."
+
+def reboot_self():
+	system("shutdown -r 1")
+	return "Начата процедура перезагрузки."
 
 def scan_network_doit():
 	resp = system("nmap -sP 192.168.1.1/24 -oG - | grep Host")

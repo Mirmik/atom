@@ -15,12 +15,14 @@ morph = pymorphy2.MorphAnalyzer()
 print("Fortunator was loaded")
 
 verbs_active = set(["включить", "запусти"])
+verbs_reboot = set(["перезагрузи"])
 verbs_scan = set(["сканировать", "просканировать"])
 verbs_print = set(["скажи", "сказать", "расскажи", "рассказать", "напиши", "писать"])
 verbs_send = set(["отправить", "прислать"])
 
 noun_base = set(["база", "машина"])
 noun_net = set(["сеть"])
+noun_self = set(["себя"])
 status_noun = set(["статус", "состояние"])
 fortune_noun = set(["фортунка", "анекдот"])
 pict_noun = set(["фотография", "картинка", "фотка", "изображение"])
@@ -63,6 +65,16 @@ class Fortunator(atom.dialog.Dialog):
 		if noun.normal_form in noun_base:
 			atom.utils.active_base()
 			return "Подан сигнал на активацию главной машины", 1.0
+		else:
+			return "", 0.0
+
+	def reboot_action(self, l0):
+		noun = self.get_first_noun(l0)
+
+		if noun.normal_form in noun_self:
+			return atom.utils.reboot_self(), 1.0
+		if noun.normal_form in noun_base:
+			return atom.utils.reboot_base(), 1.0
 		else:
 			return "", 0.0
 
