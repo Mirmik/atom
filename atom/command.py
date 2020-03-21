@@ -37,7 +37,7 @@ def incom(text):
 			atom.send_notify("Нераспознанная входная последовательность")
 			
 			for t in text.split():
-				atom.send_notify(morph.parse(t))
+				atom.send_notify(str(morph.parse(t)))
 
 			
 	
