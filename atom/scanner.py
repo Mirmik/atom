@@ -13,16 +13,13 @@ def serve(milliseconds):
 
 		ips = atom.utils.scan_network_doit()
 
-		if (len(ips) != len(lastscan_ips)):
-			atom.send_notify("Количество айпи в сети изменилось")
+		for p in ips:
+			if p not in lastscan_ips:
+				atom.send_notify(f"Сканер зарегистрировал новую пару {p}")
 
-			for p in ips:
-				if p not in lastscan_ips:
-					atom.send_notify(f"Добавилась пара {p}")
-
-			for p in lastscan_ips:
-				if p not in ips:
-					atom.send_notify(f"Исчезла пара {p}")
+		for p in lastscan_ips:
+			if p not in ips:
+				atom.send_notify(f"Сканер зафиксировал исчезновение пары {p}")
 
 		lastscan_ips = ips
 
