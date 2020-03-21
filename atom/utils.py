@@ -24,7 +24,7 @@ def scan_network_impl():
 	resp = system("nmap -sP 192.168.1.1/24 -oG - | grep Host")
 	lines = resp.split("\n")
 	print("lines:", lines)
-	ips = [l[1] for l in lines]
+	ips = [l.split()[1] for l in lines]
 	send_notify(resp)
 	send_notify(ips)
 
