@@ -26,7 +26,8 @@ def scan_network_impl():
 	ips = [(l.split()[1], l.split()[2]) for l in lines if l!=""]
 	
 	send_notify("В сети существуют адреса:")
-	send_notify("{} {}".format(*ips))
+	for i in ips:
+		send_notify("{} {}".format(i))
 
 def scan_network():
 	thr = threading.Thread(target=scan_network_impl)
