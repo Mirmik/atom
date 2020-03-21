@@ -16,6 +16,7 @@ print("Fortunator was loaded")
 
 verbs_active = set(["включить", "запусти"])
 verbs_reboot = set(["перезагрузить", "перезагрузи"])
+verbs_restart = set(["перезапустить", "перезапусти"])
 verbs_scan = set(["сканировать", "просканировать"])
 verbs_print = set(["скажи", "сказать", "расскажи", "рассказать", "напиши", "писать"])
 verbs_send = set(["отправить", "прислать"])
@@ -78,6 +79,13 @@ class Fortunator(atom.dialog.Dialog):
 		else:
 			return "", 0.0
 
+	def restart_action(self, l0):
+		noun = self.get_first_noun(l0)
+
+		if noun.normal_form in noun_self:
+			sys.exit()
+		return "", 0.0
+
 	def scan_action(self, l0):
 		noun = self.get_first_noun(l0)
 
@@ -134,6 +142,9 @@ class Fortunator(atom.dialog.Dialog):
 
 		if verb.normal_form in verbs_reboot:
 			ret = self.reboot_action(sents)
+	
+		if verb.normal_form in verbs_restart:
+			ret = self.restart_action(sents)
 
 		if ret is not None and ret[1] > 0.00001:
 			return ret
