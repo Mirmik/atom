@@ -1,6 +1,7 @@
 import atom.dialog
 import atom.conver
 import atom.wrapers
+import atom.scanner
 
 import signal
 from random import randint
@@ -29,14 +30,11 @@ def get_status():
 	status = "Ничего интересного не происходит."
 	uptime = str(datetime.datetime.now() - START_STAMP)  #"Я заблудился во времени."
 	cputerm = get_temp() #"Я научусь определять её."
-	return ("""{status}.
+	return (f"""{status}.
 Время работы: {uptime}
 Имя хостмашины: {hostname}
-Температура центрального процессора: {cputerm}""".format(
-		uptime=uptime,
-		status=status,
-		hostname=platform.node(),
-		cputerm=cputerm), 1.0)
+Температура центрального процессора: {cputerm}
+Количество машин в локальной сети: {len(atom.scanner.lastscan_ips)}""", 1.0)
 
 kagamine_avas_dir = os.path.join(os.path.dirname(__file__),"img")
 kagamine_avas = [os.path.join(kagamine_avas_dir,l) for l in os.listdir(kagamine_avas_dir)]
