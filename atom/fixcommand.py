@@ -32,7 +32,7 @@ def get_status():
 	cputerm = get_temp() #"Я научусь определять её."
 	return (f"""{status}.
 Время работы: {uptime}
-Имя хостмашины: {hostname}
+Имя хостмашины: {platform.node()}
 Температура центрального процессора: {cputerm}
 Количество машин в локальной сети: {len(atom.scanner.lastscan_ips)}""", 1.0)
 
