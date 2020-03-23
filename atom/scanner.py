@@ -12,12 +12,12 @@ class ip_status:
 	def __init__(self, ip):
 		self.pbool = atom.probevent.AperiodicBooleanState(
 			true_timeconst=None, 
-			false_timeconst=40000, 
-			trigger=0.2, 
+			false_timeconst=180_000, 
+			trigger=0.45, 
 			initstate=0
 		)
 		self.pbool.set_on_change_handle(self.on_change)
-		self.ip
+		self.ip = ip
 
 	def on_change(self, en):
 		atom.send_notify(f"on_change: {self.ip} {en}")
@@ -33,6 +33,7 @@ def serve(milliseconds):
 		lastscan_time = milliseconds
 
 		ips = atom.utils.scan_network_doit()
+		ips_set = { p[0] for p in ips }
 
 		for p in ips:
 			if p not in lastscan_ips and p[0] not in outed:
@@ -51,12 +52,14 @@ def serve(milliseconds):
 				atom.send_notify(f"Сканер зафиксировал исчезновение пары {v[1]}")
 				del outed[k]
 
-		for p in ips:
-			if p[0] not in IPS:
-				IPS[p[0]] = ip_status(p[0])
+		for p in ips_set:
+			if p not in IPS:
+#				print("create", p)
+				IPS[p] = ip_status(p)
 
 		for p in IPS:
-			if p in ips:
+			print(p)
+			if p in ips_set:
 				IPS[p].pbool.serve(True, deltatime)
 			else:
 				IPS[p].pbool.serve(False, deltatime)
