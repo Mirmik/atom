@@ -22,6 +22,9 @@ class ip_status:
 	def on_change(self, en):
 		atom.send_notify(f"on_change: {self.ip} {en}")
 
+	def __str__(self):
+		return str(self.pbool)
+
 IPS = {  }
 
 def serve(milliseconds):
@@ -35,34 +38,46 @@ def serve(milliseconds):
 		ips = atom.utils.scan_network_doit()
 		ips_set = { p[0] for p in ips }
 
-		for p in ips:
-			if p not in lastscan_ips and p[0] not in outed:
-				atom.send_notify(f"Сканер зарегистрировал новую пару {p}")
-			
-			if p[0] in outed:
-				del outed[p[0]]
-
-		for p in lastscan_ips:
-			if p not in ips:
-				print("Добавляю в outed", (milliseconds, p))
-				outed[p[0]] = (milliseconds, p)
-				
-		for k, v in outed.items():
-			if milliseconds - v[0] > 100000:
-				atom.send_notify(f"Сканер зафиксировал исчезновение пары {v[1]}")
-				del outed[k]
-
 		for p in ips_set:
 			if p not in IPS:
-#				print("create", p)
 				IPS[p] = ip_status(p)
 
 		for p in IPS:
-			print(p)
 			if p in ips_set:
 				IPS[p].pbool.serve(True, deltatime)
 			else:
 				IPS[p].pbool.serve(False, deltatime)
 			
 		lastscan_ips = ips
+
+class ScannerDialog(atom.dialog.Dialog):
+	def interpret(self, sents, text, **kwargs):
+		if text == "статус сети":
+			return self.status_notify, 1.0
+
+		return "", 0.0
+
+	def status_notify(self):
+		for k in IPS:
+			atom.send_notify(k, str(IPS[k]))			
+			
+
+atom.conver.conversation.add_dialog(ScannerDialog())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

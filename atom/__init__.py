@@ -1,7 +1,7 @@
 import atom.modes
 import atom.notify
 import atom.console
-import atom._telegram
+#import atom._telegram
 
 from atom.conver import conversation
 
@@ -16,7 +16,6 @@ from atom.notify import send_notify
 from atom.command import incom
 
 import atom.monitor
-
 import setproctitle
 
 setproctitle.setproctitle("atom")

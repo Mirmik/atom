@@ -7,9 +7,6 @@ from random import randint
 import atom.fixcommand
 import atom.utils
 
-import pymorphy2
-morph = pymorphy2.MorphAnalyzer()
-
 #from atom.spacymodel import nlp, get_first_verb, get_first_noun
 
 print("Fortunator was loaded")
@@ -111,11 +108,11 @@ class Fortunator(atom.dialog.Dialog):
 		parr = []
 
 		for t in text.split():
-			parr.append(morph.parse(t))
+			parr.append(self.morph.parse(t))
 
 		return parr
 
-	def interpret(self, sents, **kwargs):
+	def interpret(self, sents, text, **kwargs):
 		verb = self.get_first_verb(sents)
 
 		if verb is None:

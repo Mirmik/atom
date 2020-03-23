@@ -121,8 +121,9 @@ class Telegram(atom.notify.notifier):
 		updates = self.bot.get_updates()
 		print([u.message.text for u in updates])
 
-telegram = Telegram()
-#telegram.get_updates()
-telegram.start_polling()
+
+def enable_telegramm_notifier():
+	telegram = Telegram()
+	telegram.start_polling()
 	
-atom.notify.notifiers.append( telegram )
+	atom.notify.notifiers.append( telegram )

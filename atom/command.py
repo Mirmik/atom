@@ -26,13 +26,21 @@ def sigint_handler(signum, frame):
 	os.kill(PID, signal.SIGKILL)
 
 def incom(text):
+	if len(text) == 0:
+		return
+
 	try:	
-		print("incom: {}".format(text.lower()))
+		text = text.strip().lower()
+		print("incom: {}".format(text))
 
 		result, confidence = atom.conversation.listen(text)
 		
 		if confidence > 0.0:
-			atom.send_notify(result)
+			if callable(result):
+				result()
+
+			else:
+				atom.send_notify(result)
 		else:		
 			atom.send_notify("Нераспознанная входная последовательность")
 			

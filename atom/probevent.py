@@ -19,18 +19,15 @@ class AperiodicBooleanState:
 		else:
 			self.val += (deltatime / timeconst) * (curval - self.val)
 
-		print (self.val)
-		print(self.state)
-#		print("curstate", curstate)
-#		print("curval", curval)
-
 		if (self.state is False and self.val > 0.5 + self.trigger):
 			self.state = True
 			if self.on_change: 
 				self.on_change(self.state)
 
 		elif (self.state is True and self.val < 0.5 - self.trigger):
-			print("neg:", self.val)
 			self.state = False
 			if self.on_change: 
 				self.on_change(self.state)
+
+	def __str__(self):
+		return str(self.val)

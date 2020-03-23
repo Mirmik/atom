@@ -1,7 +1,7 @@
 import atom.dialog
 import atom.conver
 import atom.wrapers
-import atom.scanner
+import atom.dialogs.scanner
 
 import signal
 from random import randint
