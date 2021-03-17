@@ -39,3 +39,25 @@ scan_network
 notify: Сканирую сеть
 incom: просканируй сеть
 notify: Нераспознанная входная последовательность
+Notify module initializing.
+Console module initializing.
+Conversation module loaded
+Fixcommand was loaded
+Fortunator was loaded
+Command processor initializing.
+Traceback (most recent call last):
+  File "/home/mirmik/.local/bin/atom", line 11, in <module>
+    load_entry_point('atom==0.0.1', 'console_scripts', 'atom')()
+  File "/usr/lib/python3/dist-packages/pkg_resources/__init__.py", line 480, in load_entry_point
+    return get_distribution(dist).load_entry_point(group, name)
+  File "/usr/lib/python3/dist-packages/pkg_resources/__init__.py", line 2693, in load_entry_point
+    return ep.load()
+  File "/usr/lib/python3/dist-packages/pkg_resources/__init__.py", line 2324, in load
+    return self.resolve()
+  File "/usr/lib/python3/dist-packages/pkg_resources/__init__.py", line 2330, in resolve
+    module = __import__(self.module_name, fromlist=['__name__'], level=0)
+  File "/home/mirmik/.local/lib/python3.6/site-packages/atom-0.0.1-py3.6.egg/atom/__init__.py", line 18, in <module>
+    import atom.monitor
+  File "/home/mirmik/.local/lib/python3.6/site-packages/atom-0.0.1-py3.6.egg/atom/monitor.py", line 69, in <module>
+    node = pycrow.PyNode(incom, undel)
+AttributeError: module 'pycrow' has no attribute 'PyNode'
