@@ -1,29 +1,75 @@
-print("Loading monitor module")
-
-import threading
+#!/usr/bin/env python3
 import pycrow
+import json
 import time
 import atom
+import threading
 
-crowthr = threading.Thread(target=pycrow.spin, args=())
-crowthr.start()
+pycrow.create_udpgate(12, 10042)
 
-#pycrow.diagnostic_enable()
+class AliveRecord:
+	def __init__(self, name):
+		self.name = name
+		self.timestamp = time.time()
+		self.state = False
 
-pycrow.set_crowker(".12.127.0.0.1:10017")
-pycrow.create_udpgate(12, 10019)
+	def update(self, timestamp):
+		if self.state is False:
+			self.state = True
+			self.notify_enable()
 
-def base_started_notify(pack):
-	atom.send_notify("Получено уведомление о запуске главной машины.")
+		self.timestamp = time.time()
 
-def think_started_notify(pack):
-	atom.send_notify("Получено уведомление о запуске think.")
+	def check(self):
+		if self.state is False:
+			return
 
-def subscribe_thread():
+		curtime = time.time()
+		if curtime - self.timestamp > 10:
+			self.state = False
+			self.notify_disable()
+
+	def notify_enable(self):
+		atom.say(f"Enabled: {self.name}")
+
+	def notify_disable(self):
+		atom.say(f"Disabled: {self.name}")
+
+
+alive_list = {}
+
+def incom(pack):
+	try:
+		data = json.loads(pack.message())
+	except:
+		print("warn: unresolved format")
+		return
+
+	try:
+		name = data["mnemo"]
+	except:
+		print("warn: unresolved key")
+		return
+
+	if name not in alive_list:
+		alive_list[name] = AliveRecord(name)
+
+	alive_list[name].update(time.time())
+
+
+def undel(pack):
+	pass
+
+def func_checker():
 	while 1:
-		pycrow.subscribe("base-status",  base_started_notify)
-		pycrow.subscribe("think-status",  think_started_notify)
-		time.sleep(2)
+		time.sleep(3)
+		for k,v in alive_list.items():
+			v.check()
 
-substhr = threading.Thread(target=subscribe_thread, args=())
-substhr.start()
+node = pycrow.PyNode(incom, undel)
+node.bind(42)
+
+thr = threading.Thread(target=func_checker, args=())
+thr.start()
+
+pycrow.start_spin()

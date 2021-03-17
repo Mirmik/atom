@@ -19,3 +19,7 @@ import atom.monitor
 import setproctitle
 
 setproctitle.setproctitle("atom")
+
+
+def say(message):
+	atom.notify.send_notify(message)
