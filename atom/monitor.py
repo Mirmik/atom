@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 import pycrow
+import pycrow as crow
 import json
 import time
 import atom
 import threading
 
-pycrow.create_udpgate(12, 10042)
+NODE = None
+pycrow.create_udpgate(12, 10009)
 
 class AliveRecord:
-	def __init__(self, name):
+	def __init__(self, name, addr=None):
 		self.name = name
 		self.timestamp = time.time()
 		self.state = False
+		self.addr = addr
 
 	def update(self, timestamp):
 		if self.state is False:
@@ -52,10 +55,9 @@ def incom(pack):
 		return
 
 	if name not in alive_list:
-		alive_list[name] = AliveRecord(name)
+		alive_list[name] = AliveRecord(name, addr=pack.addr())
 
 	alive_list[name].update(time.time())
-
 
 def undel(pack):
 	pass
@@ -63,13 +65,23 @@ def undel(pack):
 def func_checker():
 	while 1:
 		time.sleep(3)
+		to_del = []
 		for k,v in alive_list.items():
 			v.check()
+			if v.state is False:
+				to_del.append(k)
+			
+			NODE.send(42, v.addr, "hello", 0, 50, False)
+
+		for k in to_del:
+			del alive_list[k]
 
 node = pycrow.PyNode(incom, undel)
 node.bind(42)
+NODE = node
 
 thr = threading.Thread(target=func_checker, args=())
 thr.start()
 
+pycrow.diagnostic_setup(True, False)
 pycrow.start_spin()
